@@ -33,10 +33,22 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 public class CachingRouteLocator
 		implements RouteLocator, ApplicationListener<RefreshRoutesEvent> {
 
+	/**
+	 * 目标路由定位器
+	 */
 	private final RouteLocator delegate;
 
+	/**
+	 * 路由信息
+	 * Flux 相当于一个 RxJava Observable，
+	 * 能够发出 0~N 个数据项，然后（可选地）completing 或 erroring。处理多个数据项作为stream
+	 */
 	private final Flux<Route> routes;
 
+	/**
+	 * 本地缓存，用于缓存路由定位器获取的路由集合
+	 *
+	 */
 	private final Map<String, List> cache = new HashMap<>();
 
 	public CachingRouteLocator(RouteLocator delegate) {

@@ -40,7 +40,7 @@ import org.springframework.web.server.ServerWebExchange;
  * "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For">X-Forwarded-For
  * reference</a>
  */
-public class XForwardedRemoteAddressResolver implements RemoteAddressResolver {
+public final class XForwardedRemoteAddressResolver implements RemoteAddressResolver {
 
 	/**
 	 * Forwarded-For header name.

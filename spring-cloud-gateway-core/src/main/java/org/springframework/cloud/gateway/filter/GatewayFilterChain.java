@@ -22,6 +22,8 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 
 /**
+ * 网关过滤链表接口
+ * 用于过滤器的链式调用
  * Contract to allow a {@link WebFilter} to delegate to the next in the chain.
  *
  * @author Rossen Stoyanchev

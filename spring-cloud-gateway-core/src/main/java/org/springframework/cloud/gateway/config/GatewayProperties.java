@@ -33,6 +33,9 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 
 /**
+ * 网关配置信息加载
+ * 从appliccation.yml中解析前缀为spring.cloud.gateway的配置
+ *
  * @author Spencer Gibb
  */
 @ConfigurationProperties("spring.cloud.gateway")
@@ -42,19 +45,27 @@ public class GatewayProperties {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	/**
-	 * List of Routes.
+	 * 路由定义列表
+	 * 加载配置key=spring.cloud.gateway.routes 列表
+	 * List of Routes
 	 */
 	@NotNull
 	@Valid
 	private List<RouteDefinition> routes = new ArrayList<>();
 
 	/**
+	 * 默认的过滤器定义列表
+	 * 加载配置 key = spring.cloud.gateway.default-filters 列表
 	 * List of filter definitions that are applied to every route.
 	 */
 	private List<FilterDefinition> defaultFilters = new ArrayList<>();
 
-	private List<MediaType> streamingMediaTypes = Arrays
-			.asList(MediaType.TEXT_EVENT_STREAM, MediaType.APPLICATION_STREAM_JSON);
+	/**
+	 * 网媒体类型列表
+	 * 加载配置 key = spring.cloud.gateway.streamingMediaTypes 列表
+	 * 默认包含{text/event-stream,application/stream+json}
+	 */
+	private List<MediaType> streamingMediaTypes = Arrays.asList(MediaType.TEXT_EVENT_STREAM, MediaType.APPLICATION_STREAM_JSON);
 
 	public List<RouteDefinition> getRoutes() {
 		return routes;

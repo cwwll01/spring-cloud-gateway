@@ -169,6 +169,11 @@ public class GatewayAutoConfiguration {
 		return new RouteLocatorBuilder(context);
 	}
 
+	/**
+	 * 从Properties（GatewayProperties）中加载RouteDefinition信息
+	 * @param properties
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator(
@@ -176,12 +181,21 @@ public class GatewayAutoConfiguration {
 		return new PropertiesRouteDefinitionLocator(properties);
 	}
 
+	/**
+	 * 初始化存储路由定义加载器
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnMissingBean(RouteDefinitionRepository.class)
 	public InMemoryRouteDefinitionRepository inMemoryRouteDefinitionRepository() {
 		return new InMemoryRouteDefinitionRepository();
 	}
 
+	/**
+	 * RouteDefinition定位器
+	 * @param routeDefinitionLocators
+	 * @return
+	 */
 	@Bean
 	@Primary
 	public RouteDefinitionLocator routeDefinitionLocator(
@@ -190,6 +204,15 @@ public class GatewayAutoConfiguration {
 				Flux.fromIterable(routeDefinitionLocators));
 	}
 
+	/**
+	 * 创建一个根据RouteDefinition转换的路由定位器
+	 * @param properties
+	 * @param GatewayFilters
+	 * @param predicates
+	 * @param routeDefinitionLocator
+	 * @param conversionService
+	 * @return
+	 */
 	@Bean
 	public RouteLocator routeDefinitionRouteLocator(GatewayProperties properties,
 			List<GatewayFilterFactory> GatewayFilters,
@@ -200,10 +223,17 @@ public class GatewayAutoConfiguration {
 				GatewayFilters, properties, conversionService);
 	}
 
+	/**
+	 * 创建一个缓存路由的路由定位器
+	 * @param routeLocators
+	 * @return
+	 */
 	@Bean
 	@Primary
 	// TODO: property to disable composite?
 	public RouteLocator cachedCompositeRouteLocator(List<RouteLocator> routeLocators) {
+		//1.创建组合路由定位器，根据(容器)已有的路由定位器集合
+		//2.创建缓存功能的路由定位器
 		return new CachingRouteLocator(
 				new CompositeRouteLocator(Flux.fromIterable(routeLocators)));
 	}
@@ -232,6 +262,10 @@ public class GatewayAutoConfiguration {
 				globalCorsProperties, environment);
 	}
 
+	/**
+	 * 加载配置beans
+	 * @return
+	 */
 	@Bean
 	public GatewayProperties gatewayProperties() {
 		return new GatewayProperties();

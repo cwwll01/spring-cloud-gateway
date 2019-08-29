@@ -36,13 +36,10 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.support.ServiceUnavailableException;
 import org.springframework.cloud.gateway.support.TimeoutException;
-import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.reactive.DispatcherHandler;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -137,21 +134,8 @@ public class HystrixGatewayFilterFactory
 							return Mono.error(new TimeoutException());
 						case SHORTCIRCUIT:
 							return Mono.error(new ServiceUnavailableException());
-						case COMMAND_EXCEPTION: {
-							Throwable cause = e.getCause();
-
-							/*
-							 * We forsake here the null check for cause as
-							 * HystrixRuntimeException will always have a cause if the
-							 * failure type is COMMAND_EXCEPTION.
-							 */
-							if (cause instanceof ResponseStatusException
-									|| AnnotatedElementUtils.findMergedAnnotation(
-											cause.getClass(),
-											ResponseStatus.class) != null) {
-								return Mono.error(cause);
-							}
-						}
+						case COMMAND_EXCEPTION:
+							return Mono.error(e.getCause());
 						default:
 							break;
 						}

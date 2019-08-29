@@ -34,24 +34,44 @@ import org.springframework.validation.annotation.Validated;
 import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
 /**
+ * 路由定义实体信息，包含路由的定义信息
  * @author Spencer Gibb
  */
 @Validated
 public class RouteDefinition {
 
+	/**
+	 * 路由ID 编号，唯一
+	 */
 	@NotEmpty
 	private String id = UUID.randomUUID().toString();
 
+	/**
+	 * 谓语定义数组
+	 * predicates 属性，谓语定义数组
+	 * 请求通过 predicates 判断是否匹配。在 Route 里，PredicateDefinition 转换成 Predicate
+	 */
 	@NotEmpty
 	@Valid
 	private List<PredicateDefinition> predicates = new ArrayList<>();
 
+	/**
+	 *过滤器定义数组
+	 * filters 属性，过滤器定义数组。
+	 * 在 Route 里，FilterDefinition 转换成 GatewayFilter
+	 */
 	@Valid
 	private List<FilterDefinition> filters = new ArrayList<>();
 
+	/**
+	 * 路由指向的URI
+	 */
 	@NotNull
 	private URI uri;
 
+	/**
+	 * 顺序
+	 */
 	private int order = 0;
 
 	public RouteDefinition() {

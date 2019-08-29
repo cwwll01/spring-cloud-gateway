@@ -19,10 +19,14 @@ package org.springframework.cloud.gateway.route;
 import reactor.core.publisher.Flux;
 
 /**
+ * 组合多个 RouteDefinitionLocator 的实现，为 routeDefinitions提供统一入口
  * @author Spencer Gibb
  */
 public class CompositeRouteDefinitionLocator implements RouteDefinitionLocator {
 
+	/**
+	 * 所有路由定义定位器实例集合
+	 */
 	private final Flux<RouteDefinitionLocator> delegates;
 
 	public CompositeRouteDefinitionLocator(Flux<RouteDefinitionLocator> delegates) {
@@ -31,6 +35,7 @@ public class CompositeRouteDefinitionLocator implements RouteDefinitionLocator {
 
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
+		//将各个RouteDefinitionLocator的getRouteDefinitions合并返回统一的Flux<RouteDefinition>
 		return this.delegates.flatMap(RouteDefinitionLocator::getRouteDefinitions);
 	}
 

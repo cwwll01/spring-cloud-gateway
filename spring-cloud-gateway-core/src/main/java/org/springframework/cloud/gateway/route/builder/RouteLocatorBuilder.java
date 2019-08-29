@@ -79,6 +79,11 @@ public class RouteLocatorBuilder {
 		 * @return a {@link Builder}
 		 */
 		public Builder route(Function<PredicateSpec, Route.AsyncBuilder> fn) {
+			//r -> r.host("**.abc.org").and().path("/anything/png")
+			//					.filters(f ->
+			//							f.prefixPath("/httpbin")
+			//									.addResponseHeader("X-TestHeader", "foobar"))
+			//					.uri(uri)
 			Route.AsyncBuilder routeBuilder = fn.apply(new RouteSpec(this).randomId());
 			add(routeBuilder);
 			return this;

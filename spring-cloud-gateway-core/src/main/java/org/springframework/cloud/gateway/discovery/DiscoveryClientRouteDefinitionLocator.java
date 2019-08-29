@@ -45,13 +45,21 @@ import org.springframework.util.StringUtils;
  */
 public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLocator {
 
-	private static final Log log = LogFactory
-			.getLog(DiscoveryClientRouteDefinitionLocator.class);
+	private static final Log log = LogFactory.getLog(DiscoveryClientRouteDefinitionLocator.class);
 
+	/**
+	 * 注册中心客户端
+	 */
 	private final DiscoveryClient discoveryClient;
 
+	/**
+	 * 本地配置信息
+	 */
 	private final DiscoveryLocatorProperties properties;
 
+	/**
+	 * 路由ID前缀
+	 */
 	private final String routeIdPrefix;
 
 	private final SimpleEvaluationContext evalCtxt;
@@ -70,6 +78,10 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 				.build();
 	}
 
+	/**
+	 * 通过注册中心查找服务组装路由定义信息
+	 * @return
+	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 
@@ -150,7 +162,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 		}
 	}
 
-	private static class DelegatingServiceInstance implements ServiceInstance {
+	private final static class DelegatingServiceInstance implements ServiceInstance {
 
 		final ServiceInstance delegate;
 

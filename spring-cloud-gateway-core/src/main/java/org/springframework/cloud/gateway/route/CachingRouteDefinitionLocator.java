@@ -27,15 +27,23 @@ import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.context.ApplicationListener;
 
 /**
+ * RouteDefinitionLocator 包装实现类，实现了路由定义的本地缓存功能
  * @author Spencer Gibb
  */
 public class CachingRouteDefinitionLocator
 		implements RouteDefinitionLocator, ApplicationListener<RefreshRoutesEvent> {
 
+
+	/**
+	 * 实际路由定义定位器
+	 */
 	private final RouteDefinitionLocator delegate;
 
 	private final Flux<RouteDefinition> routeDefinitions;
 
+	/**
+	 * 路由定义的本地缓存
+	 */
 	private final Map<String, List> cache = new HashMap<>();
 
 	public CachingRouteDefinitionLocator(RouteDefinitionLocator delegate) {

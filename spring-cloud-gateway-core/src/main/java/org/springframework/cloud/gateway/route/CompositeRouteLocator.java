@@ -19,10 +19,16 @@ package org.springframework.cloud.gateway.route;
 import reactor.core.publisher.Flux;
 
 /**
+ * 组合多个 RRouteLocator 的实现，为Route提供统一获取入口
  * @author Spencer Gibb
  */
 public class CompositeRouteLocator implements RouteLocator {
 
+	/**
+	 * 路由信息
+	 * Flux 相当于一个 RxJava Observable，
+	 * 能够发出 0~N 个数据项，然后（可选地）completing 或 erroring。处理多个数据项作为stream
+	 */
 	private final Flux<RouteLocator> delegates;
 
 	public CompositeRouteLocator(Flux<RouteLocator> delegates) {

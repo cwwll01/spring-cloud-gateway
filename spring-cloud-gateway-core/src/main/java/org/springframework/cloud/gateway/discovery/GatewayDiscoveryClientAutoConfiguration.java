@@ -43,6 +43,7 @@ import static org.springframework.cloud.gateway.support.NameUtils.normalizeFilte
 import static org.springframework.cloud.gateway.support.NameUtils.normalizeRoutePredicateName;
 
 /**
+ * 初始化注册中心路由定义定位器
  * @author Spencer Gibb
  */
 @Configuration

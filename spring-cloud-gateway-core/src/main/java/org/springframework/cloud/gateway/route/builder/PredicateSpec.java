@@ -61,6 +61,7 @@ public class PredicateSpec extends UriSpec {
 	}
 
 	public BooleanSpec asyncPredicate(AsyncPredicate<ServerWebExchange> predicate) {
+		//routeBuilder 赋值 谓词
 		this.routeBuilder.asyncPredicate(predicate);
 		return new BooleanSpec(this.routeBuilder, this.builder);
 	}

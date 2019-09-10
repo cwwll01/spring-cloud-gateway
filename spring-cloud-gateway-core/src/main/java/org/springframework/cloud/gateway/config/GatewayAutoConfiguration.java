@@ -158,11 +158,20 @@ import static org.springframework.cloud.gateway.config.HttpClientProperties.Pool
 @ConditionalOnClass(DispatcherHandler.class)
 public class GatewayAutoConfiguration {
 
+	/**
+	 * 时区时间转换器
+	 * @return
+	 */
 	@Bean
 	public StringToZonedDateTimeConverter stringToZonedDateTimeConverter() {
 		return new StringToZonedDateTimeConverter();
 	}
 
+	/**
+	 * 路由定位器建立者
+	 * @param context
+	 * @return
+	 */
 	@Bean
 	public RouteLocatorBuilder routeLocatorBuilder(
 			ConfigurableApplicationContext context) {
@@ -206,11 +215,11 @@ public class GatewayAutoConfiguration {
 
 	/**
 	 * 创建一个根据RouteDefinition转换的路由定位器
-	 * @param properties
-	 * @param GatewayFilters
-	 * @param predicates
-	 * @param routeDefinitionLocator
-	 * @param conversionService
+	 * @param properties				GatewayProperties
+	 * @param GatewayFilters			过滤器工厂列表
+	 * @param predicates				谓词工厂列表
+	 * @param routeDefinitionLocator	routeDefinition定位器之前的CompositeRouteDefinitionLocator
+	 * @param conversionService			webFluxConversionService
 	 * @return
 	 */
 	@Bean
@@ -238,6 +247,11 @@ public class GatewayAutoConfiguration {
 				new CompositeRouteLocator(Flux.fromIterable(routeLocators)));
 	}
 
+	/**
+	 * 初始化路由刷新监听器
+	 * @param publisher
+	 * @return
+	 */
 	@Bean
 	public RouteRefreshListener routeRefreshListener(
 			ApplicationEventPublisher publisher) {
@@ -421,7 +435,7 @@ public class GatewayAutoConfiguration {
 		return new CloudFoundryRouteServiceRoutePredicateFactory();
 	}
 
-	// GatewayFilter Factory beans
+	// GatewayFilter beans
 
 	@Bean
 	public AddRequestHeaderGatewayFilterFactory addRequestHeaderGatewayFilterFactory() {

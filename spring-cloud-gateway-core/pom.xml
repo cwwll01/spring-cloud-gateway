@@ -122,9 +122,48 @@
 			<artifactId>embedded-redis</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.trove4j/trove4j -->
+		<dependency>
+			<groupId>net.sf.trove4j</groupId>
+			<artifactId>trove4j</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.jetbrains.kotlin</groupId>-->
+				<!--<artifactId>kotlin-maven-plugin</artifactId>-->
+
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>compile</id>-->
+						<!--<phase>process-sources</phase>-->
+						<!--<goals>-->
+							<!--<goal>compile</goal>-->
+						<!--</goals>-->
+						<!--<configuration>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+					<!--<execution>-->
+						<!--<id>test-compile</id>-->
+						<!--<phase>process-test-sources</phase>-->
+						<!--<goals>-->
+							<!--<goal>test-compile</goal>-->
+						<!--</goals>-->
+						<!--<configuration>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+
 			<plugin>
 				<!-- Based on instructions here - https://kotlinlang.org/docs/reference/using-maven.html -->
 				<artifactId>kotlin-maven-plugin</artifactId>
@@ -132,6 +171,15 @@
 				<configuration>
 					<jvmTarget>1.8</jvmTarget>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-compiler</artifactId>
+						<version>1.3.50</version>
+					</dependency>
+
+
+				</dependencies>
 				<executions>
 					<execution>
 						<id>compile</id>

@@ -109,6 +109,10 @@ public class RouteDefinitionRouteLocator
 		this.publisher = publisher;
 	}
 
+	/**
+	 * 将谓词工厂转为Map方式存储
+	 * @param predicates
+	 */
 	private void initFactories(List<RoutePredicateFactory> predicates) {
 		predicates.forEach(factory -> {
 			String key = factory.name();
@@ -124,6 +128,10 @@ public class RouteDefinitionRouteLocator
 		});
 	}
 
+	/**
+	 * 获取路由信息，将 RouteDefinition 转为 Route
+	 * @return
+	 */
 	@Override
 	public Flux<Route> getRoutes() {
 		return this.routeDefinitionLocator.getRouteDefinitions().map(this::convertToRoute)
@@ -222,7 +230,7 @@ public class RouteDefinitionRouteLocator
 	}
 
 	/**
-	 * 获取过滤器列表(默认过滤器靠前）
+	 * 获取过滤器列表
 	 * @param routeDefinition
 	 * @return
 	 */

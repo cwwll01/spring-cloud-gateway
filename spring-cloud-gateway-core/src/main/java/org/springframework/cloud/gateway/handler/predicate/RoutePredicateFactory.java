@@ -38,6 +38,11 @@ public interface RoutePredicateFactory<C> extends ShortcutConfigurable, Configur
 	 */
 	String PATTERN_KEY = "pattern";
 
+	/**
+	 * 流式构建时调用
+	 * @param consumer
+	 * @return
+	 */
 	// useful for javadsl
 	default Predicate<ServerWebExchange> apply(Consumer<C> consumer) {
 		C config = newConfig();
@@ -46,6 +51,11 @@ public interface RoutePredicateFactory<C> extends ShortcutConfigurable, Configur
 		return apply(config);
 	}
 
+	/**
+	 * 流式构建时调用
+	 * @param consumer
+	 * @return
+	 */
 	default AsyncPredicate<ServerWebExchange> applyAsync(Consumer<C> consumer) {
 		C config = newConfig();
 		consumer.accept(config);
